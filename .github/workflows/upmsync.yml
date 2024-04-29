@@ -28,17 +28,7 @@ jobs:
           git add --a
           git commit -m "Package Update ${{ env.version }}"
           git push origin
-
-      - name: Update README
-        run: |
-          if ! cmp --silent "README.md" "Assets/Package/README.md"; then
-              echo "different"
-              cp -f README.md Assets/Package/README.md
-              git add --a
-              git commit -m "Updated README.md ${{ env.version }}"
-              git push origin
-          fi
-
+      
       - name: Cook UPM
         run: |
           ls Staging/package/
