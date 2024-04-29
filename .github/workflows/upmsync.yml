@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 env:
   base: https://dl.google.com/games/registry/unity/com.google.firebase.app-check/com.google.firebase.app-check
-  version: 11.8.0
+  version: 11.8.1
 jobs:
   build:
     runs-on: ubuntu-latest
