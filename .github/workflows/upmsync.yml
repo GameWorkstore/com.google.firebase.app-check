@@ -6,11 +6,10 @@ on:
   workflow_dispatch:
 env:
   base: https://dl.google.com/games/registry/unity/com.google.firebase.app-check/com.google.firebase.app-check
-  version: 11.4.0
+  version: 11.5.0
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: false
     steps:
       - uses: actions/checkout@v2
       - name: Config
@@ -31,13 +30,12 @@ jobs:
           git push origin
 
       - name: Update README
-        if: false
         run: |
           if ! cmp --silent "README.md" "Assets/Package/README.md"; then
               echo "different"
               cp -f README.md Assets/Package/README.md
               git add --a
-              git commit -m "Updated README.md"
+              git commit -m "Updated README.md ${{ env.version }}"
               git push origin
           fi
 
@@ -54,19 +52,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: upm
           force: true
-  release:
-    runs-on: ubuntu-latest
-    #needs: build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.4
-        with:
-          ref: upm
-        
-      - name: Release
-        uses: marvinpinto/action-automatic-releases@latest
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: ${{ env.version }}
-          prerelease: false
-          title: ${{ env.version }}
